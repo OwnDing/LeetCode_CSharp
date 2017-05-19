@@ -14,7 +14,7 @@ public bool isMatch(String s, String p)
                 }
                 else
                 {
-                    return helper1(s, p, i, j + 2);
+                    return helper1(s, p, i+1, j + 1);
                 }
             }
 
