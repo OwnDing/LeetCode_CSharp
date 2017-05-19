@@ -3,6 +3,7 @@ public class RegularExpressionMatching{
         {
             return MatchFunc(s, p, 0, 0);
         }
+        
         private bool MatchFunc(string s, string p, int i, int j)
         {
             if (j >= p.Length) return i == s.Length;
@@ -24,7 +25,9 @@ public class RegularExpressionMatching{
             //s[i]==s[i+1]==s[i+2]
             while (i < s.Length && (s[i] == p[j] || p[j] == '.'))
             {
+                if (MatchFunc(s, p, i, j + 2)) //equal x* to zero char
                     return true;
+                i++; //equal x* to onr or more char
             }
             //if p[j+1]=='*' && s[i] != p[j]
             return MatchFunc(s, p, i, j + 2);
@@ -45,6 +48,8 @@ public class RegularExpressionMatching{
                     if (s[i] == p[j] || p[j] == '.') dp[i + 1, j + 1] = dp[i, j];
                     else if (p[j] == '*')
                     {
+                        if (s[i] != p[j - 1] && p[j - 1] != '.') dp[i + 1, j + 1] = dp[i + 1, j - 1]; //equal x* to zero char
+                        else dp[i + 1, j + 1] = dp[i + 1, j - 1] || dp[i + 1, j] || dp[i, j + 1];////equal x* to zero char||to one char||to more chars
                     }
                 }
             }
